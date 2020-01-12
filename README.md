@@ -20,14 +20,19 @@ FROM titles AS t
 RIGHT JOIN emp_info AS ei
 ON (t.emp_no = ei.emp_no);
 ![titles_retiring](https://github.com/arodriguez82/Pewlett-Hackard-Analysis/blob/master/titles_retiring.png?raw=true)
-- This query created a table that combined a list of retirement eligible employees and their titles. 
+- This query created a table that combined a list of retirement eligible employees and their titles. (See: \Data\titles_retiring.csv)
 
 2. Only The Most Recent Title:
 
 SELECT emp_no, first_name, last_name, from_date, title  INTO mentor_list  FROM  (SELECT emp_no, first_name, last_name, from_date, title, ROW_NUMBER() OVER  (PARTITION BY (emp_no) ORDER BY from_date DESC) rn 	FROM titles_retiring) tmp WHERE rn = 1  ORDER BY from_date DESC;
-
 ![mentor_list](https://github.com/arodriguez82/Pewlett-Hackard-Analysis/blob/master/mentor_list.png?raw=true)
-- This query and table retained only the most recent title held by employees eligible for retirement. There were 33,118 employees.
+- This query and table retained only the most recent title held by employees eligible for retirement. There were 33,118 employees. (See: \Data\mentor_list.csv)
 
+SELECT COUNT(emp_no), title INTO title_count  FROM mentor_list  GROUP BY title  ORDER BY title;
+![title_count](https://github.com/arodriguez82/Pewlett-Hackard-Analysis/blob/master/title_count.png?raw=true)
+- This table query and table collected the number of position titles of employees eligible to retire. (See: \Data\title_count.csv)
 
-
+3.  Who's Ready for a Mentor?
+![mentor_ready](https://github.com/arodriguez82/Pewlett-Hackard-Analysis/blob/master/mentor_ready.png?raw=true)
+- This created a list of current employees born in the year 1965. (See: \Data\mentor_ready.csv) 
+(Please Note: The challenge provided conflicting instructions for this part of the challenge and this is my best interpretation that would not be repeat information)
